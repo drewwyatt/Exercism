@@ -12,6 +12,7 @@
 
     verseIndexes.forEach(function(index) {
       lyrics += self.song[index].join('\n');
+      lyrics += '\n';
     });
 
     return lyrics;
