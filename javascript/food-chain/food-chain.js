@@ -2,17 +2,28 @@
   var SongMaker = function() {
     this.song = Song();
     this.verse = verse;
+    this.verses = verses;
     this.getVerseIndexes = getVerseIndexes;
   };
 
-  var verse = function(startingVerse, endingVerse) {
+  var verse = function(verse) {
+    var verseIndex = verse -1;
+    var lyrics = '';
+
+    lyrics  = this.song[verseIndex].join('\n');
+    lyrics += '\n';
+
+    return lyrics;
+  };
+
+  var verses = function(startingVerse, endingVerse) {
     var verseIndexes = this.getVerseIndexes(startingVerse, endingVerse);
     var lyrics = '';
     var self = this;
 
     verseIndexes.forEach(function(index) {
       lyrics += self.song[index].join('\n');
-      lyrics += '\n';
+      lyrics += '\n\n';
     });
 
     return lyrics;
