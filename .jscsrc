@@ -1,0 +1,16 @@
+{ 
+  "preset": "airbnb", 
+ 
+  "disallowQuotedKeysInObjects": "allButReserved", 
+  "disallowYodaConditions": null, 
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties", 
+  "requireCapitalizedConstructors": true, 
+  "requireCapitalizedConstructors": { 
+    "allExcept": ["moment"] 
+  }, 
+  "requireDotNotation": "except_snake_case", 
+  "requirePaddingNewLinesAfterBlocks": { 
+    "allExcept": ["inCallExpressions", "inArrayExpressions"] 
+  }, 
+  "safeContextKeyword": null 
+}
