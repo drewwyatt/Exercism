@@ -31,9 +31,21 @@
 		this._word = word.toLowerCase().split('');
 	}
 	
-	Anagram.prototype.matches = function(words) {
+	Anagram.prototype.matches = function(wordArray) {
 		var matches = [];
 		var self = this;
+		var words;
+		
+		if(Array.isArray(wordArray)) {
+			words = wordArray
+		} else {
+			if(arguments.length === 1) {
+				words = [arguments[0]];
+			} else {
+				words = Array.prototype.slice.call(arguments, 1);
+			}
+		}
+		
 		words.forEach(function(word) {
 			if(self._matchesThisWord(word)) {
 				matches.push(word);
