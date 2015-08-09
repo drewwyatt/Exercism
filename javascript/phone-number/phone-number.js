@@ -27,11 +27,19 @@
       }
     }
 
+    if(validatedNumber === undefined) {
+      validatedNumber = '0000000000';
+    }
+
     return validatedNumber;
   };
 
   PhoneNumber.prototype.number = function() {
     return this.phoneNumber;
+  };
+
+  PhoneNumber.prototype.areaCode = function() {
+    return this.phoneNumber.substring(0, 3);
   };
 
   module.exports =  PhoneNumber;
