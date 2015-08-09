@@ -42,5 +42,26 @@
     return this.phoneNumber.substring(0, 3);
   };
 
+  PhoneNumber.prototype.prefix = function() {
+    return this.phoneNumber.substring(3, 6);
+  };
+
+  PhoneNumber.prototype.suffix = function() {
+    return this.phoneNumber.substring(6);
+  };
+
+  PhoneNumber.prototype.toString = function() {
+    var parts = [
+      '(',
+      this.areaCode(),
+      ')',
+      ' ',
+      this.prefix(),
+      '-',
+      this.suffix()
+    ];
+    return parts.join('');
+  };
+
   module.exports =  PhoneNumber;
 })();
