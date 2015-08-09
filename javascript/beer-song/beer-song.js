@@ -22,12 +22,34 @@
     return lyrics;
   };
 
+  BeerSong.prototype._getFinalVerse = function(addTrailingNewline) {
+    var trailingNewLines = (addTrailingNewline) ? '\n\n' : '\n';
+    var verse = "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n";
+    if(addTrailingNewline) {
+      verse += "\n";
+    }
+
+    return verse;
+  };
+
   BeerSong.prototype.verse = function(number) {
-    return this._buildNumberedVerse(number);
+    var lyrics = (number > 0) ? this._buildNumberedVerse(number) : this._getFinalVerse();
+    return lyrics;
   };
 
   BeerSong.prototype.sing = function(startNumber, endNumber) {
+    var self = this;
     var lyrics = '';
+    endNumber = (endNumber === undefined) ? 0 : endNumber;
+
+    for (var i = startNumber; i >= endNumber; i--) {
+      if(i > 0) {
+        lyrics += self._buildNumberedVerse(i, (i > endNumber));
+      } else {
+        lyrics += self._getFinalVerse();
+      }
+    }
+
     return lyrics;
   };
 
@@ -51,7 +73,6 @@
     this.number--;
   };
 
-  // console.log(new BeerSong()._buildNumberedVerse(1));
-
+  // console.log(new BeerSong()._buildNumberedVerse(1));;
   module.exports = new BeerSong();
 })();
