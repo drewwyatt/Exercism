@@ -2,7 +2,7 @@
   'use strict';
 
   var PhoneNumber = function(userInput) {
-    this.phoneNumber = this._clean(userInput);
+    this.phoneNumber = this._validate(this._clean(userInput));
   };
 
   PhoneNumber.prototype._clean = function(dirtyNumber) {
@@ -15,6 +15,19 @@
     });
 
     return cleanNumber.join('');
+  };
+
+  PhoneNumber.prototype._validate = function(schrodingerNumber) {
+    var validatedNumber;
+    if(schrodingerNumber.length === 10) {
+      validatedNumber = schrodingerNumber;
+    } else if (schrodingerNumber.length === 11) {
+      if(schrodingerNumber.substring(0, 1) === '1') {
+        validatedNumber = schrodingerNumber.replace('1', '');
+      }
+    }
+
+    return validatedNumber;
   };
 
   PhoneNumber.prototype.number = function() {
