@@ -5,70 +5,50 @@
     this.number = number;
   };
 
-  Romanizer.prototype.letters = {
-    I: 1,
-    IV: 4,
-    V: 5,
-    IX: 9,
-    X: 10,
-    XL: 40,
-    L: 50,
-    XC: 90,
-    C: 100,
-    CD: 400,
-    D: 500,
-    CM: 900,
-    M: 1000
+  var Numeral = function(value, threshold) {
+    this.value = value;
+    this.threshold = threshold;
   };
 
-  Romanizer.prototype.getLetterForNumber = function(number) {
-    for (var prop in this.letters) {
-      if (this.letters.hasOwnProperty(prop)) {
-        if (this.letters[prop] === number) {
-          return prop;
-        }
-      }
-    }
-  };
-
-  Romanizer.prototype.thresholds = {
-    I:  1,
-    IV: 0.8,
-    V:  1,
-    IX: 0.9,
-    X:  1,
-    XL: 0.8,
-    L:  1,
-    XC: 0.9,
-    C: 1,
-    CD: 0.8,
-    D: 1,
-    CM: 0.9,
-    M: 1
+  Romanizer.prototype.numerals = {
+    M: new Numeral(1000, 1),
+    CM: new Numeral(900, 0.9),
+    D: new Numeral(500, 1),
+    CD: new Numeral(400, 0.8),
+    C: new Numeral(100, 1),
+    XC: new Numeral(90, 0.9),
+    L: new Numeral(50, 1),
+    XL: new Numeral(40, 0.8),
+    X: new Numeral(10, 1),
+    IX: new Numeral(9, 0.9),
+    V: new Numeral(5, 1),
+    IV: new Numeral(4, 0.8),
+    I: new Numeral(1, 1)
   };
 
   Romanizer.prototype.meetsThreshold = function(number, letter) {
-    var trimmedLetter = (letter.length > 1) ? letter.substring(1,2) : letter;
-    return (Math.floor(number / this.letters[trimmedLetter] * 10)  / 10 >= this.thresholds[letter]);
+    return (Math.floor(number / this.numerals[letter].value * 10) / 10 >= this.numerals[letter].threshold);
   };
 
-  Romanizer.prototype.checkingOrder = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+
+
+  // Romanizer.prototype.checkingOrder = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
 
   Romanizer.prototype.buildString = function(number, string) {
     var self = this;
-    if(number <= 0) {
+    if (number <= 0) {
       return string;
     } else {
       var doChecking = true;
-      self.checkingOrder.forEach(function(letter) {
-        if(doChecking) {
-          if(self.meetsThreshold(number, letter)) {
+      for(var letter in self.numerals) {
+        if (doChecking) {
+          if (self.meetsThreshold(number, letter)) {
             string += letter;
-            number -= self.letters[letter];
+            number -= self.numerals[letter].value;
             doChecking = false;
           }
         }
-      });
+      }
 
       // console.log(number, string);
 
