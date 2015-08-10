@@ -64,14 +64,11 @@
     if (number <= 0) {
       return string;
     } else {
-      var doChecking = true;
       for (var letter in self.numerals) {
-        if (doChecking) {
-          if (self._meetsThreshold(number, letter)) {
-            string += letter;
-            number -= self.numerals[letter].value;
-            doChecking = false;
-          }
+        if (self._meetsThreshold(number, letter)) {
+          string += letter;
+          number -= self.numerals[letter].value;
+          break;
         }
       }
 
