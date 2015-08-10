@@ -6,7 +6,7 @@
    * (Helper object for Romanizer)
    */
 
-  var Numeral = function(value, threshold) {
+  var Numeral = function(value) {
     this.value = value;
     this.threshold = this._getThreshold(value);
   };
