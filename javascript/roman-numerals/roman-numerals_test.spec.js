@@ -5,39 +5,39 @@ describe("toRoman()", function() {
     expect(toRoman(1)).toEqual('I');
   });
 
-  xit("converts 2", function() {
+  it("converts 2", function() {
     expect(toRoman(2)).toEqual('II');
   });
 
-  xit("converts 3", function() {
+  it("converts 3", function() {
     expect(toRoman(3)).toEqual('III');
   });
 
-  xit("converts 4", function() {
+  it("converts 4", function() {
     expect(toRoman(4)).toEqual('IV');
   });
 
-  xit("converts 5", function() {
+  it("converts 5", function() {
     expect(toRoman(5)).toEqual('V');
   });
 
-  xit("converts 6", function() {
+  it("converts 6", function() {
     expect(toRoman(6)).toEqual('VI');
   });
 
-  xit("converts 9", function() {
+  it("converts 9", function() {
     expect(toRoman(9)).toEqual('IX');
   });
 
-  xit("converts 27", function() {
+  it("converts 27", function() {
     expect(toRoman(27)).toEqual('XXVII');
   });
 
-  xit("converts 48", function() {
+  it("converts 48", function() {
     expect(toRoman(48)).toEqual('XLVIII');
   });
 
-  xit("converts 59", function() {
+  it("converts 59", function() {
     expect(toRoman(59)).toEqual('LIX');
   });
 
