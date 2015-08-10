@@ -7,8 +7,11 @@
 
   Romanizer.prototype.letters = {
     I: 1,
+    IV: 4,
     V: 5,
+    IX: 9,
     X: 10,
+    XL: 40,
     L: 50,
     C: 100,
     D: 500,
@@ -25,32 +28,38 @@
     }
   };
 
+  Romanizer.prototype.thresholds = {
+    I:  1,
+    IV: 0.8,
+    V:  1,
+    IX: 0.9,
+    X:  1,
+    XL: 0.8,
+    L:  1
+  };
+
+  Romanizer.prototype.meetsThreshold = function(number, letter) {
+    var trimmedLetter = (letter.length > 1) ? letter.substring(1,2) : letter;
+    return (Math.floor(number / this.letters[trimmedLetter] * 10)  / 10 >= this.thresholds[letter]);
+  };
+
+  Romanizer.prototype.checkingOrder = ['L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+
   Romanizer.prototype.buildString = function(number, string) {
+    var self = this;
     if(number <= 0) {
       return string;
     } else {
-      if(Math.floor(number / this.letters.L * 10)  / 10 >= 1) {
-        string += 'L';
-        number -= 50;
-      } else if(Math.floor(number / this.letters.L * 10)  / 10 >= 0.8) {
-        string += 'XL';
-        number -= 40;
-      } else if(Math.floor(number / this.letters.X * 10)  / 10 >= 1) {
-        string += 'X';
-        number -= 10;
-      } else if(Math.floor(number / this.letters.X * 10)  / 10 === 0.9) {
-        string += 'IX';
-        number -= 9;
-      } else if(Math.floor(number / this.letters.V * 10)  / 10 >= 1) {
-        string += 'V';
-        number -= 5;
-      } else if(Math.floor(number / this.letters.V * 10)  / 10 >= 0.8) {
-        string += 'IV';
-        number -= 4;
-      } else if(Math.floor(number / this.letters.I * 10)  / 10 >= 1) {
-        string += 'I';
-        number -= 1;
-      }
+      var doChecking = true;
+      self.checkingOrder.forEach(function(letter) {
+        if(doChecking) {
+          if(self.meetsThreshold(number, letter)) {
+            string += letter;
+            number -= self.letters[letter];
+            doChecking = false;
+          }
+        }
+      });
 
       return this.buildString(number, string);
     }
